@@ -49,13 +49,21 @@ def send_system_message(sender: ServerUser, message: str):
 
 def send_chat_message(sender: ServerUser, message: str):
     for user in users:
-        if user.room_code == sender.room_code and not user is sender:
+        if (
+            user.room_code == sender.room_code
+            and user.room_code != ""
+            and not user is sender
+        ):
             user.connection.send(colored(f"[CHAT]: {message}", CHAT_COLOR).encode())
 
 
 def send_user_message(sender: ServerUser, message: str):
     for user in users:
-        if user.room_code == sender.room_code and not user is sender:
+        if (
+            user.room_code == sender.room_code
+            and user.room_code != ""
+            and not user is sender
+        ):
             user.connection.send(
                 colored(f"\t\t\t\t{sender.username}: {message}", sender.color).encode()
             )
@@ -92,7 +100,7 @@ def help_action(sender: ServerUser):
         sender,
         f"""Comandos disponíveis:
 /quit: Desconecta você do sistema
-/helo: Exibe essa mensagem
+/help: Exibe essa mensagem
 /username: Troca seu nome de usuário
 /color: Troca sua cor no chat
 /enter: Entra em uma sala com um código
@@ -178,7 +186,7 @@ def list_room_users_action(sender: ServerUser):
 
     room_users.removesuffix(", ")
 
-    send_system_message(sender, f"Usuários na sala: {users}")
+    send_system_message(sender, f"Usuários na sala: {room_users}")
 
 
 def handle_actions(sender: ServerUser, action: str, content: str):

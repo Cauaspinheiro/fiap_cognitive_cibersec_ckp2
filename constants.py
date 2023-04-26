@@ -12,5 +12,5 @@ class Actions:
     LIST_ROOM_USERS = "/list"
 
 
-SYSTEM_COLOR = "dark_grey"
+SYSTEM_COLOR = "grey"
 CHAT_COLOR = "grey"
